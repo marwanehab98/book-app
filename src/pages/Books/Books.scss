@@ -1,0 +1,175 @@
+.secondHalf {
+    width: 100%;
+    margin-left: 30px;
+}
+
+.filtersRow{
+    width: 15%;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    display: flex;
+}
+
+.filtersTitle{
+    margin-top: 50px;
+}
+
+.claimrow{
+  margin-bottom: 60px;
+  margin-right: 10rem;
+  float: right;
+  display: flex;
+}
+
+input {
+      background-color: white;
+      outline-color: #47aba3;
+      padding: 0.5rem 0.5rem;
+      font-size: 1rem;
+      font-weight: 400;
+      margin-right: 10px;
+      margin-left: 10px;
+      color: #212529;
+      background-clip: padding-box;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      border-radius: 5px;
+      border-width: 0.5px;
+}
+
+select {
+  background-color: white;
+      outline-color: #47aba3;
+      padding: 0.5rem 0.5rem;
+      font-size: 1rem;
+      font-weight: 400;
+      margin-right: 10px;
+      margin-left: 10px;
+      color: #212529;
+      background-clip: padding-box;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      border-radius: 5px;
+      border-width: 0.5px;
+}
+
+
+
+.searchCard {
+    margin-top: 20px;
+    .Header {
+    
+      h2 {
+        font-size: 22px;
+        margin-bottom: 25px;
+      }
+      margin-bottom: 25px;
+    }
+  
+    .SearchBanner {
+      display: block;
+      margin: -50px auto 0;
+    }
+    .UserRow{
+      cursor: pointer;
+      display: flex;
+      grid-gap: 5px;
+      gap: 5px;
+      align-items: center;
+      background: #EEF5FF;
+      padding: 5px;
+      border-radius: 10px;
+    
+      .ImgClass{
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+      }
+    }
+    .List {
+      .DateRow {
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        border-top: 1px solid white;
+        cursor: pointer;
+        &:hover {
+          background: grey;
+        }
+        svg {
+          margin-inline-end: 7px;
+          font-size: 22px;
+        }
+  
+        small {
+          font-size: 11px;
+          margin-left: 10px;
+          color: #e08610;
+          margin: 0;
+          display: block;
+          margin-top: -6px;
+        }
+      }
+    }
+  
+  }
+  .title{
+    font-size: 22px;
+    color: grey;
+    margin-inline: 14px;
+  }
+  .AutoApprove {
+    .card-body {
+      padding: 0 !important;
+    }
+
+    ul {
+      li {
+        width: 50%;
+        border-radius: 10px 10px 0 0;
+        button {
+          width: 100%;
+          background-color: unset !important;
+          border-color: rgba(255, 255, 255, 0) !important;
+        }
+      }
+    }
+  }
+  
+  button.active {
+    background: #752727;
+    color: violet;
+  }
+  .searchInput{
+    margin-bottom: 20px !important;;
+    min-width: 400px;
+    background: #F2FFFE !important;
+    border:1px solid white
+  }
+  .ant-table-thead th.ant-table-column-sort{
+    background: #ffffff;
+  }
+  
+  
+  .PopupInfo{
+    display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+  }
+  
+  .totalPrice{
+    width: 25%;
+    text-align: center;
+    margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 2px solid #47aba3;
+      background: #1cc9bc;
+      color: white;
+  }
+  
+  .footerButtons{
+    margin-top: 30px;
+    display: flex;
+      align-items: flex-start;
+  }
