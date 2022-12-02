@@ -79,7 +79,7 @@ const Books = (props) => {
     const getBooks = () => {
         if (props.myBooks.length < 1) {
             // console.log("test")
-            fetch('https://example-data.draftbit.com/books', {
+            fetch(process.env.REACT_APP_BASE_URL, {
                 method: 'GET'
             })
                 .then((response) => {
