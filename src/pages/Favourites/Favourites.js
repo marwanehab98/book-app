@@ -1,6 +1,8 @@
+//Page showing your favourite books categorized by author
+
 import React, { useEffect, useState } from "react";
 import Book from '../../components/book/Book'
-import { Row, Col, Pagination, Drawer } from "antd";
+import { Row, Col, Drawer } from "antd";
 import bookCover from '../../assets/BookCover.jpg'
 
 
@@ -9,7 +11,6 @@ const Favourites = (props) => {
     const [title, setTitle] = useState([]);
     const [favourites, setFavourites] = useState([]);
     useEffect(() => {
-        // console.log(favourites);
         props.favourites(favourites);
         showBooks();
     }, [favourites]);
@@ -19,15 +20,6 @@ const Favourites = (props) => {
     }, []);
 
     const [rows, setRows] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    useEffect(() => {
-        // console.log(currentPage);
-        try {
-            showBooks();
-        } catch (error) {
-            // console.log(error);
-        }
-    }, [currentPage])
 
     const [open, setOpen] = useState(false);
 
@@ -42,11 +34,12 @@ const Favourites = (props) => {
     const [bookDetails, setBookDetails] = useState([]);
 
 
-
+    //Getting favourites as a prop from parent component (Main.js)
     const getFavourites = () => {
         setFavourites(props.myFavourites);
     }
 
+    //Handling removing favourites from the favourite page
     const handleFavourites = (data) => {
         let tempFavourites = [];
         Object.assign(tempFavourites, favourites);
@@ -58,28 +51,53 @@ const Favourites = (props) => {
         setFavourites(tempFavourites);
     };
 
+    const groupBy = (arr, property) => {
+        return arr.reduce(function (memo, x) {
+            if (!memo[x[property]]) { memo[x[property]] = []; }
+            memo[x[property]].push(x);
+            return memo;
+        }, {});
+    }
+
+    //Showing favourite books on this page categorized by author
+    //Grouping favourites by the authors key
     const showBooks = () => {
-        const colCount = 4;
+        const colCount = 6;
         let tempRows = [];
-        for (let j = 0; j < Math.ceil(50 / 4); j++) {
-            let cols = [];
-            for (let i = 0; i < colCount; i++) {
-                if (4 * j + i < 50 && 4 * j + i + ((currentPage - 1) * 50) < favourites.length) {
+        let cols = [];
+        let tempFavourites = groupBy(favourites, 'authors');
+        let count = 0;
+        try {
+            Object.keys(tempFavourites).forEach(key => {
+                cols = [];
+                tempRows.push(
+                    <Col key={key.toString()} span={24}>
+                        <strong>{key}</strong>
+                    </Col>
+                )
+                if (count % colCount == 0) {
+                    cols = [];
+                }
+                tempFavourites[key].forEach(book => {
                     cols.push(
-                        <Col style={{ "backgroundColor": "white" }} key={(4 * j + i + ((currentPage - 1) * 50)).toString()} span={24 / colCount}>
+                        <Col key={book.id.toString()} span={24 / colCount}>
                             <Book
-                                book={favourites[4 * j + i + ((currentPage - 1) * 50)]}
-                                isChecked={favourites.some(e => e.id === favourites[4 * j + i + ((currentPage - 1) * 50)].id)}
+                                book={book}
+                                isChecked={favourites.some(e => e.id === book.id)}
                                 isFavourite={handleFavourites}
                                 clicked={handleClick}
                             ></Book>
                         </Col>,
                     );
-                }
-            }
-            tempRows.push(cols);
+                    count++;
+                })
+                tempRows.push(cols);
+
+            });
+            setRows(tempRows);
+        } catch (error) {
+
         }
-        setRows(tempRows);
     }
 
     const DescriptionItem = ({ title, content }) => (
@@ -89,6 +107,7 @@ const Favourites = (props) => {
         </div>
     );
 
+    //Handling clicking on the book component to show book details
     const handleClick = (data) => {
         setTitle(data.title);
         let tempBookDetails = []
@@ -104,18 +123,14 @@ const Favourites = (props) => {
         );
         Object.keys(data).forEach(key => {
             if (key !== "id")
-            tempCols.push(
-                <DescriptionItem key={key} title={key.replace(/^./, key[0].toUpperCase())} content={data[key]} />
-            )
+                tempCols.push(
+                    <DescriptionItem key={key} title={key.replace(/^./, key[0].toUpperCase())} content={data[key]} />
+                )
         })
         tempBookDetails.push(tempCols);
         setBookDetails(tempBookDetails);
 
         showDrawer();
-    }
-
-    const pageChange = (page) => {
-        setCurrentPage(page);
     }
 
     if (favourites.length < 1) {
@@ -127,12 +142,6 @@ const Favourites = (props) => {
             <Row gutter={[16, 16]}>
                 {rows}
             </Row>
-            <Pagination
-                current={currentPage}
-                total={favourites.length}
-                defaultPageSize={50}
-                showSizeChanger={false}
-                onChange={pageChange} />
             <Drawer height="100%" title={title} placement="bottom" onClose={onClose} open={open}>
                 {bookDetails}
             </Drawer>

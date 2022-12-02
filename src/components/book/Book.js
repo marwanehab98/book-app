@@ -10,9 +10,10 @@ const { Meta } = Card;
 const Book = (props) => {
     const [checked, setChecked] = useState(props.isChecked);
     useEffect(() => {
-        // console.log(checked);
     }, [checked]);
 
+
+    //Handling checking the favourite checkbox by sending props to parent component
     const handleCheckbox = (e) => {
         setChecked(e.target.checked);
         props.isFavourite({
@@ -21,6 +22,8 @@ const Book = (props) => {
         });
     }
 
+
+    //Handling clicking on card by sending props to parent component
     const click = (e) => {
         props.clicked(props.book);
     }
@@ -32,8 +35,11 @@ const Book = (props) => {
                     hoverable
                     style={{
                         margin: '5px',
-                        width: '100%',
-                        // height: '600px'
+                        // width: '75%',
+                        // height: '75%',
+                        // maxWidth: '75%',
+                        // maxHeight: '50vh',
+                        borderColor: '#e0e0e0'
                     }}
                     cover={
                         <a 
@@ -45,7 +51,7 @@ const Book = (props) => {
                             }
                                 style={{
                                     padding: '5px',
-                                    maxHeight: '50vh',
+                                    // maxHeight: '50vh',
                                     width: '100%'
                                 }} />
                         </a>

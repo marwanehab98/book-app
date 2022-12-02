@@ -1,4 +1,6 @@
-// import classes from "./Books.scss";
+//This is the homepage where all the books are shown
+
+
 import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import Book from '../../components/book/Book'
@@ -48,18 +50,20 @@ const Books = (props) => {
         setOpen(false);
     };
 
+
+    //Show all books in the current page as a grid (50 books max)
     const showBooks = () => {
-        const colCount = 4;
+        const colCount = 6;
         let tempRows = [];
-        for (let j = 0; j < Math.ceil(50 / 4); j++) {
+        for (let j = 0; j < Math.ceil(50 / colCount); j++) {
             let cols = [];
             for (let i = 0; i < colCount; i++) {
-                if (4 * j + i < 50 && 4 * j + i + ((currentPage - 1) * 50) < allBooks.length) {
+                if (colCount * j + i < 50 && colCount * j + i + ((currentPage - 1) * 50) < allBooks.length) {
                     cols.push(
-                        <Col style={{ "backgroundColor": "white" }} key={(4 * j + i + ((currentPage - 1) * 50)).toString()} span={24 / colCount}>
+                        <Col key={(colCount * j + i + ((currentPage - 1) * 50)).toString()} span={24 / colCount}>
                             <Book
-                                book={allBooks[4 * j + i + ((currentPage - 1) * 50)]}
-                                isChecked={favourites.some(e => e.id === allBooks[4 * j + i + ((currentPage - 1) * 50)].id)}
+                                book={allBooks[colCount * j + i + ((currentPage - 1) * 50)]}
+                                isChecked={favourites.some(e => e.id === allBooks[colCount * j + i + ((currentPage - 1) * 50)].id)}
                                 isFavourite={handleFavourites}
                                 clicked={handleClick}
                             ></Book>
@@ -76,6 +80,9 @@ const Books = (props) => {
         getBooks();
     }, []);
 
+
+    //API call for getting the book details from the API
+    //Called only once at the beginning
     const getBooks = () => {
         if (props.myBooks.length < 1) {
             // console.log("test")
@@ -97,6 +104,8 @@ const Books = (props) => {
         setFavourites(props.myFavourites);
     };
 
+
+    //Handling favourites on the homepage
     const handleFavourites = (data) => {
         // let tempFavourites = [];
         // Object.assign(tempFavourites, favourites);
@@ -116,6 +125,9 @@ const Books = (props) => {
             <p style={{ fontSize: '16px' }}>{content}</p>
         </div>
     );
+
+    //Handle clicks on the book component
+    //Shows a drawer with the details of the book
     const handleClick = (data) => {
         setTitle(data.title);
         let tempBookDetails = []
@@ -131,9 +143,9 @@ const Books = (props) => {
         );
         Object.keys(data).forEach(key => {
             if (key !== "id")
-            tempCols.push(
-                <DescriptionItem key={key} title={key.replace(/^./, key[0].toUpperCase())} content={data[key]} />
-            )
+                tempCols.push(
+                    <DescriptionItem key={key} title={key.replace(/^./, key[0].toUpperCase())} content={data[key]} />
+                )
         })
         tempBookDetails.push(tempCols);
         setBookDetails(tempBookDetails);
@@ -141,6 +153,9 @@ const Books = (props) => {
         showDrawer();
     }
 
+
+    //Handling the pagination behaviour
+    //Changes the currentPage state which is used as a variable on the showBooks() function
     const pageChange = (page) => {
         setCurrentPage(page);
     }
